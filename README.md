@@ -7,6 +7,8 @@ JobTracker is a multi-tenant job management system for a roofing company. It use
 
 [View Architecture Diagram on Mermaid Live](https://mermaid.ai/d/385635bc-7e82-4eea-a317-b49e4f3b984f)
 
+![Architecture Diagram](./Architecture-Diagram.png)
+
 ## 6.2 Design Principles Analysis
 
 ### SOLID Principles
