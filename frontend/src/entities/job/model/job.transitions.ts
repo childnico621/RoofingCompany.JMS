@@ -9,7 +9,7 @@ export type JobAction =
     | { type: 'complete'; completedAt: Date; signatureUrl: string }
     | { type: 'cancel'; reason: string };
 
-type Transitions = {
+export type Transitions = {
     Draft: Scheduled;
     Scheduled: InProgress | Cancelled;
     InProgress: Completed | Cancelled;

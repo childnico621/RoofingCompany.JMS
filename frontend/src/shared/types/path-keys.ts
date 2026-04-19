@@ -1,14 +1,14 @@
 import { Primitive } from "./primitives";
 
 export type PathKeys<T> =
-    T extends Primitive | ((...args: any[]) => any)
+    T extends Primitive | ((...args: unknown[]) => unknown)
     ? never
     : T extends readonly (infer U)[]
     ? PathKeys<U>
     : T extends object
     ? {
         [K in keyof T & string]:
-        T[K] extends Primitive | ((...args: any[]) => any)
+        T[K] extends Primitive | ((...args: unknown[]) => unknown)
         ? K
         : `${K}.${PathKeys<T[K]>}` // Template Literal Type Composition
     }[keyof T & string]

@@ -1,16 +1,17 @@
 import { describe, it, expect } from 'vitest';
-import { jobReducer, applyOptimisticUpdate, rollbackOptimisticUpdate, setFilters } from './job.slice';
+import { jobReducer, applyOptimisticUpdate, rollbackOptimisticUpdate } from './job.slice';
 import { makeSelectFilteredJobs } from './job.selectors';
 import { Job } from './job.types';
+import { RootState } from '@/app/providers/store';
 
+const initialState: RootState['job'] = {
+  selectedJobIds: [],
+  filters: {},
+  pagination: { page: 1, pageSize: 10 },
+  sort: {},
+  optimisticUpdates: {},
+};
 describe('jobSlice', () => {
-  const initialState = {
-    selectedJobIds: [],
-    filters: {},
-    pagination: { page: 1, pageSize: 10 },
-    sort: {},
-    optimisticUpdates: {},
-  };
 
   it('should handle applyOptimisticUpdate', () => {
     const action = applyOptimisticUpdate({ id: '1', changes: { status: 'Completed' } });
@@ -19,7 +20,7 @@ describe('jobSlice', () => {
   });
 
   it('should handle rollbackOptimisticUpdate', () => {
-    const prevState = { ...initialState, optimisticUpdates: { '1': { status: 'Completed' } } };
+    const prevState: RootState['job'] = { ...initialState, optimisticUpdates: { '1': { status: 'Completed' } } };
     const action = rollbackOptimisticUpdate('1');
     const state = jobReducer(prevState, action);
     expect(state.optimisticUpdates['1']).toBeUndefined();
@@ -28,18 +29,17 @@ describe('jobSlice', () => {
 
 describe('jobSelectors', () => {
   const mockJobs: Job[] = [
-    { id: '1', title: 'Roof Repair', status: 'Scheduled', street: '', city: '', state: '', zipCode: '' },
-    { id: '2', title: 'Inspection', status: 'Completed', street: '', city: '', state: '', zipCode: '' },
+    { id: '1', title: 'Roof Repair', status: 'Scheduled' },
+    { id: '2', title: 'Inspection', status: 'Completed' },
   ];
 
   it('should filter jobs by status', () => {
-    const state = {
+    const state: RootState = {
       job: {
+        ...initialState,
         filters: { status: 'Completed' },
-        sort: {},
-        optimisticUpdates: {},
       }
-    } as any;
+    };
 
     const selectFiltered = makeSelectFilteredJobs(mockJobs);
     const result = selectFiltered(state);
@@ -49,13 +49,12 @@ describe('jobSelectors', () => {
   });
 
   it('should apply optimistic updates to filtered jobs', () => {
-    const state = {
+    const state: RootState = {
       job: {
-        filters: {},
-        sort: {},
+        ...initialState,
         optimisticUpdates: { '1': { status: 'Completed' } },
       }
-    } as any;
+    };
 
     const selectFiltered = makeSelectFilteredJobs(mockJobs);
     const result = selectFiltered(state);

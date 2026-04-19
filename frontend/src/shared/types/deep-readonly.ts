@@ -1,7 +1,7 @@
 import { Primitive } from "./primitives";
 
 export type DeepReadonly<T> =
-    T extends (...args: any[]) => any
+    T extends (...args: unknown[]) => unknown
     ? T
     : T extends Primitive
     ? T
