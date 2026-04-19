@@ -1,0 +1,26 @@
+# Node
+node_modules/
+.npm/
+.next/
+
+# .NET
+bin/
+obj/
+
+# Environment
+.env
+.env.local
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln.docstates
+
+# OS files
+.DS_Store
+Thumbs.db
+
+technical-assessment-fullstack-senior.md
