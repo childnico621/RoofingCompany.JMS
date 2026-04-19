@@ -5,58 +5,7 @@ JobTracker is a multi-tenant job management system for a roofing company. It use
 
 ## 6.1 Architecture Diagram
 
-```mermaid
----
-config:
-  theme: neo
-  layout: fixed
----
-flowchart TB
- subgraph Frontend["Next.js - FSD"]
-        Views["Views"]
-        Pages["Pages"]
-        Features["Features"]
-        Entities["Entities"]
-        Shared["Shared"]
-        Hooks["Hooks"]
-        ReduxStore["Redux Slice"]
-  end
- subgraph JobsModule["Jobs Module"]
-        AppJobs["MediatR Handlers"]
-        DomainJobs["Aggregates: Job"]
-        InfraJobs["EF Core / Outbox"]
-  end
- subgraph Backend[".NET 10 - Modular Monolith"]
-        App["Application Layer"]
-        API["API Layer"]
-        Domain["Domain Layer"]
-        Infra["Infrastructure Layer"]
-        JobsModule
-  end
- subgraph AsyncPipeline["Async Processing"]
-        OutboxTable[("Outbox Table")]
-        Hangfire["Hangfire Processor"]
-        BillingModule["Billing Module / Integration Events"]
-        Notifications["Notifications / SendGrid"]
-  end
- subgraph Database["PostgreSQL"]
-        SchemaJobs["jobs schema"]
-        SchemaAuth["auth/tenant schema"]
-  end
-    Pages --> Views
-    Views --> Features & Hooks
-    Features --> Entities
-    Entities --> Shared
-    Hooks --> ReduxStore
-    API --> App
-    App --> Domain
-    Infra --> App & Domain
-    OutboxTable --> Hangfire
-    Hangfire --> BillingModule & Notifications
-    Frontend -- REST --> API
-    API -- CQRS --> JobsModule
-    JobsModule -- Saves --> OutboxTable & SchemaJobs
-```
+[View Architecture Diagram on Mermaid Live](https://mermaid.ai/d/385635bc-7e82-4eea-a317-b49e4f3b984f)
 
 ## 6.2 Design Principles Analysis
 
