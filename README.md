@@ -9,7 +9,15 @@ JobTracker is a multi-tenant job management system for a roofing company. It use
 
 ![Architecture Diagram](./Architecture-Diagram.png)
 
-## 6.2 Design Principles Analysis
+## 6.2 Domain-Driven Design (DDD) Analysis
+
+This project follows DDD principles. Below is the basic DDD analysis diagram of the business:
+
+![DDD Analysis Diagram](./DDD-Roofing-Job-Tracker.png)
+
+[📄 View Excalidraw Source File](./DDD-Roofing-Job-Tracker.excalidraw)
+
+## 6.3 Design Principles Analysis
 
 ### SOLID Principles
 1. **Single Responsibility (S):** `CreateJobCommandHandler` only handles the orchestration of creating a job. It doesn't know about HTTP or Database specifics.
