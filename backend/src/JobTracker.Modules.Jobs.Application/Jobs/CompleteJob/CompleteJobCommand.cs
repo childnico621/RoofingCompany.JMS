@@ -3,7 +3,7 @@ using JobTracker.Modules.Jobs.Application.Common;
 using JobTracker.Modules.Jobs.Domain.Jobs;
 using JobTracker.Modules.Jobs.Domain.SeedWork;
 using MediatR;
-
+using Unit = MediatR.Unit;
 namespace JobTracker.Modules.Jobs.Application.Jobs.CompleteJob;
 
 public sealed record CompleteJobCommand(Guid JobId) : IRequest<Result<Unit>>;
