@@ -59,3 +59,6 @@ This project follows DDD principles. Below is the basic DDD analysis diagram of 
    - Run `npm run dev`
 3. **Infrastructure:**
    - Use the `docker-compose.yml` (if provided) to spin up PostgreSQL.
+
+> [!IMPORTANT]
+> After running `docker compose up -d`, please visit **[http://localhost:3000/jobs](http://localhost:3000/jobs)** to see the application in action. The root page (`/`) still displays the default Next.js template to focus efforts on the job management functionality.

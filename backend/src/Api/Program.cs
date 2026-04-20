@@ -31,6 +31,46 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<JobTracker.Modules.Jobs.Infrastructure.Persistence.JobsDbContext>();
     // In a real app we would use Migrate(), but for this assessment EnsureCreated is safer
     await context.Database.EnsureCreatedAsync();
+
+    if (!context.Jobs.Any())
+    {
+        var tenantId = Guid.Parse("00000000-0000-0000-0000-000000000001");
+        var customerId = Guid.NewGuid();
+        var assigneeId = Guid.NewGuid();
+
+        var jobs = new List<JobTracker.Modules.Jobs.Domain.Jobs.Job>
+        {
+            JobTracker.Modules.Jobs.Domain.Jobs.Job.Create("Roof Inspection - Central Park", "Initial assessment", 
+                new JobTracker.Modules.Jobs.Domain.Jobs.Address("123 Central Park S", "New York", "NY", "10019"), customerId, tenantId),
+            
+            JobTracker.Modules.Jobs.Domain.Jobs.Job.Create("Emergency Patch - Brooklyn", "Repair leak", 
+                new JobTracker.Modules.Jobs.Domain.Jobs.Address("456 Atlantic Ave", "Brooklyn", "NY", "11217"), customerId, tenantId),
+            
+            JobTracker.Modules.Jobs.Domain.Jobs.Job.Create("Full Replacement - Queens", "Complete shingle replacement", 
+                new JobTracker.Modules.Jobs.Domain.Jobs.Address("789 Broadway", "LIC", "NY", "11101"), customerId, tenantId),
+            
+            JobTracker.Modules.Jobs.Domain.Jobs.Job.Create("Gutter Cleaning - Bronx", "Annual maintenance", 
+                new JobTracker.Modules.Jobs.Domain.Jobs.Address("101 Grand Concourse", "Bronx", "NY", "10451"), customerId, tenantId),
+            
+            JobTracker.Modules.Jobs.Domain.Jobs.Job.Create("Shingle Repair - Staten Island", "Minor repair", 
+                new JobTracker.Modules.Jobs.Domain.Jobs.Address("202 Victory Blvd", "SI", "NY", "10301"), customerId, tenantId)
+        };
+
+        // Transition states
+        jobs[1].Schedule(DateTime.UtcNow.AddDays(7), assigneeId);
+        
+        jobs[2].Schedule(DateTime.UtcNow.AddDays(1), assigneeId);
+        jobs[2].Start();
+
+        jobs[3].Schedule(DateTime.UtcNow.AddDays(-10), assigneeId);
+        jobs[3].Start();
+        jobs[3].Complete();
+
+        jobs[4].Cancel();
+
+        context.Jobs.AddRange(jobs);
+        await context.SaveChangesAsync();
+    }
 }
 
 // Configure the HTTP request pipeline.

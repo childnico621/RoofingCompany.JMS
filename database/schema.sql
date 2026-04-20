@@ -107,3 +107,15 @@ WHERE j.organization_id = '00000000-0000-0000-0000-000000000001'
   AND j.id > '00000000-0000-0000-0000-000000000000'
 ORDER BY j.id ASC
 LIMIT 10;
+
+--------------------------------------------------------------------------------
+-- Seed Data
+-- Adding one job for each status for demonstration purposes
+
+INSERT INTO jobs.jobs (id, title, description, status, street, city, state, zip_code, latitude, longitude, scheduled_date, customer_id, organization_id)
+VALUES 
+('f47ac10b-58cc-4372-a567-0e02b2c3d470', 'Roof Inspection - Central Park', 'Initial assessment of the north wing roof structure.', 'Draft', '123 Central Park S', 'New York', 'NY', '10019', 40.7651, -73.9776, NULL, '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001'),
+('f47ac10b-58cc-4372-a567-0e02b2c3d471', 'Emergency Patch - Brooklyn', 'Repairing urgent leak after yesterday storm.', 'Scheduled', '456 Atlantic Ave', 'Brooklyn', 'NY', '11217', 40.6847, -73.9845, '2026-05-01T09:00:00Z', '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001'),
+('f47ac10b-58cc-4372-a567-0e02b2c3d472', 'Full Replacement - Queens', 'Complete shingle replacement for the main residential building.', 'InProgress', '789 Broadway', 'Long Island City', 'NY', '11106', 40.7615, -73.9255, '2026-04-15T08:30:00Z', '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001'),
+('f47ac10b-58cc-4372-a567-0e02b2c3d473', 'Gutter Cleaning - Bronx', 'Annual maintenance and gutter cleanup.', 'Completed', '101 Grand Concourse', 'Bronx', 'NY', '10451', 40.8267, -73.9225, '2026-03-10T14:00:00Z', '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001'),
+('f47ac10b-58cc-4372-a567-0e02b2c3d474', 'Shingle Repair - Staten Island', 'Minor repair on back side of the house. Cancelled due to client request.', 'Cancelled', '202 Victory Blvd', 'Staten Island', 'NY', '10301', 40.6300, -74.0800, '2026-04-20T11:00:00Z', '00000000-0000-0000-0000-000000000002', '00000000-0000-0000-0000-000000000001');
